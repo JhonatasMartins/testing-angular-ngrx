@@ -1,0 +1,45 @@
+
+<h1>{{loading$ | async}}</h1>
+<table>
+  <thead>
+      <th>Moeda</th>
+      <th>Min</th>
+      <th>Max</th>
+      <th>Preço</th>
+      <th>Volume</th>
+      <th></th>
+  </thead>
+  <tbody>
+      <tr *ngFor="let coin of coinsPrice$ | async">
+        <td>{{coin.coin}}</td>
+        <td>{{coin.low | currency: 'BRL'}}</td>
+        <td>{{coin.high | currency: 'BRL'}}</td>
+        <td>{{coin.last | currency: 'BRL'}}</td>
+        <td>{{coin.vol}}</td>
+        <td>
+          <button (click)="detailOperationClick(coin.coin)">Detalhar</button>
+        </td>
+      </tr>
+  </tbody>
+</table>
+
+<section *ngIf="coinType">
+  <h2>Últimas Operações: {{coinType}}</h2>
+  <table>
+      <thead>
+        <th>Hora</th>
+        <th>Operação</th>
+        <th>Preço</th>
+        <th>Quantidade</th>
+      </thead>
+      <tbody>
+        <tr *ngFor="let operation of trade$ | async">
+          <td>{{formatDate(operation.date)}}</td>
+          <td>{{operation.type}}</td>
+          <td>{{operation.price | currency: 'BRL'}}</td>
+          <td>{{operation.amount}}</td>
+        </tr>
+      </tbody>
+  </table>
+</section>
+
